@@ -9,7 +9,7 @@ LOG_DIR="${HOME}/.local/state/arch-update"
 confirm() {
   local response
 
-  read -r -p "$1 [Y/N]: " response
+  read -r -p "$1 [Y/n]: " response
   [[ "$response" =~ ^[Yy]$ ]]
 }
 
@@ -44,6 +44,20 @@ update_system() {
   sudo pacman -Syu
 
   echo "Offical packages updated."
+}
+
+# Update AUR Packages
+
+update_aur() {
+  if command -v paru &>/dev/null; then
+    echo "Updating AUR using paru..."
+    paru -Sua
+  elif command -v yay &>/dev/null; then
+    echo "Updating AUR using yay..."
+    yay -Sua
+  else
+    echo "No AUR helper detected! Skipping AUR updates."
+  fi
 }
 
 # Cleanup
@@ -86,5 +100,6 @@ remove_orphans() {
 
 checks
 update_system
+update_aur
 clean_cache
 remove_orphans
