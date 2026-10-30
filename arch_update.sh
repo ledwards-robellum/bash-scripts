@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Script to update Arch-Based distrubtions
+# Created by Logan Edwards
+
 # Configuration
 
 LOG_DIR="${HOME}/.local/state/arch-update"
