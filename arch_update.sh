@@ -5,15 +5,15 @@
 
 # Configuration
 
-RED=$(tput setaf 1)
-GREEN=$(tput setaf 2)
-YELLOW=$(tput setaf 3)
-BLUE=$(tput setaf 4)
-BOLD=$(tput bold)
-RESET=$(tput sgr0)
+RED="$(tput bold)$(tput setaf 1)"
+GREEN="$(tput bold)$(tput setaf 2)"
+YELLOW="$(tput bold)$(tput setaf 3)"
+BLUE="$(tput bold)$(tput setaf 4)"
+RESET="$(tput sgr0)$(tput bold)"
+
+tput bold
 
 # Basically ensures script exits if a part fails:
-
 set -Eeuo pipefail
 
 LOG_DIR="${HOME}/.local/state/arch-update"
@@ -72,6 +72,7 @@ checks() {
 
 update_system() {
   echo "----------------------------------------------------------------"
+  echo
   info "Updating Arch Linux Packages..."
 
   sudo pacman -Syu
@@ -83,6 +84,7 @@ update_system() {
 
 update_aur() {
   echo "----------------------------------------------------------------"
+  echo
   if command -v paru &>/dev/null; then
     info "Updating AUR using paru..."
     paru -Sua
@@ -98,6 +100,7 @@ update_aur() {
 
 clean_cache() {
   echo "----------------------------------------------------------------"
+  echo
   info "Cleaning package cache..."
 
   if command -v paccache &>/dev/null; then
@@ -111,6 +114,7 @@ clean_cache() {
 
 remove_orphans() {
   echo "----------------------------------------------------------------"
+  echo
   info "Checking for orphaned packages..."
 
   local orphans
@@ -138,6 +142,7 @@ remove_orphans() {
 
 check_services() {
   echo "----------------------------------------------------------------"
+  echo
   info "Checking for failed systemd services..."
 
   systemctl --failed --no-pager || true
@@ -145,6 +150,7 @@ check_services() {
 
 check_reboot() {
   echo "----------------------------------------------------------------"
+  echo
   info "Checking installed kernel..."
 
   local running_kernel
